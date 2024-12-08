@@ -1,0 +1,6 @@
+langchain-core
+langchain-openai
+langgraph
+python-dotenv
+openai==1.55.3
+streamlit
