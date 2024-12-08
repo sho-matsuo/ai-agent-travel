@@ -14,4 +14,4 @@ with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABA
                             price int
                         )
         ''')
-        corsor.commit()
+        cursor.commit()
