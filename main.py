@@ -9,6 +9,7 @@ from langgraph.graph import END, StateGraph
 from pydantic import BaseModel, Field
 
 import streamlit as st
+import mysql.connector
 
 # .envファイルから環境変数を読み込む
 load_dotenv()
@@ -375,6 +376,30 @@ def main():
     # args = parser.parse_args()
     # args = parser.parse_args(["--task", "旅行アプリを開発したい"]) #sample code for simulation
     args = st.text_input("作成したいアプリケーションについて記載してください")
+
+
+    #データベース接続
+    config = {
+    'user': 'aiagent-admin',         # MySQLユーザー名
+    'password': 'A!agent01',     # MySQLパスワード
+    'host': 'sql-server-aiagents.database.windows.net',             # ホスト名（例: 'localhost'）
+    'database': 'db_aiagents' # データベース名
+    }
+
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+
+    # INSERT文の準備
+    insert_query = "INSERT INTO input (input_data) VALUES (%s)"
+    data_to_insert = (args,)  # 挿入するデータ（タプル形式）
+
+    # クエリの実行
+    cursor.execute(insert_query, data_to_insert)
+
+    # トランザクションをコミット
+    connection.commit()
+
+    print("データが正常に挿入されました！")
 
 
     # ChatOpenAIモデルを初期化
