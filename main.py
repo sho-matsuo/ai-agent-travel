@@ -387,8 +387,14 @@ def main():
     args = st.text_input("作成したいアプリケーションについて記載してください")
     
     with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(f"INSERT INTO input (input_data) VALUES {args}")
+        with conn.cursor() as cursor:       
+            
+            insert_query = "INSERT INTO input (input_data) VALUES (?)"
+            data_to_insert = (args,)  # 挿入するデータ（タプル形式）
+
+            # クエリの実行
+            cursor.execute(insert_query, data_to_insert)
+
             cursor.commit()
             st.text("データが正常に挿入されました！")
 
