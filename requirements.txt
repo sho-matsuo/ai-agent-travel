@@ -4,4 +4,3 @@ langgraph
 python-dotenv
 openai==1.55.3
 streamlit
-mysql-connector-python
