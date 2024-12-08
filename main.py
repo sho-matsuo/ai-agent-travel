@@ -399,7 +399,7 @@ def main():
     # トランザクションをコミット
     connection.commit()
 
-    print("データが正常に挿入されました！")
+    st.text("データが正常に挿入されました！")
 
 
     # ChatOpenAIモデルを初期化
