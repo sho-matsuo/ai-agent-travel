@@ -385,13 +385,12 @@ def main():
     # args = parser.parse_args()
     # args = parser.parse_args(["--task", "旅行アプリを開発したい"]) #sample code for simulation
     args = st.text_input("作成したいアプリケーションについて記載してください")
-
+    
     with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
-    with conn.cursor() as cursor:
-        cursor.execute(f"INSERT INTO input (input_data) VALUES {args}")
-        cursor.commit()
-
-    st.text("データが正常に挿入されました！")
+        with conn.cursor() as cursor:
+            cursor.execute(f"INSERT INTO input (input_data) VALUES {args}")
+            cursor.commit()
+            st.text("データが正常に挿入されました！")
 
     # ChatOpenAIモデルを初期化
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.0)
