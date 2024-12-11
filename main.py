@@ -385,18 +385,21 @@ def main():
     # args = parser.parse_args()
     # args = parser.parse_args(["--task", "旅行アプリを開発したい"]) #sample code for simulation
     args = st.text_input("作成したいアプリケーションについて記載してください")
+
+    if st.button("実行"):
+        with open("output.txt", "w") as f:
+            f.write(args)
+        with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
+            with conn.cursor() as cursor:       
+                
+                insert_query = "INSERT INTO input (input_data) VALUES (?)"
+                data_to_insert = (args,)  # 挿入するデータ（タプル形式）
     
-    with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
-        with conn.cursor() as cursor:       
-            
-            insert_query = "INSERT INTO input (input_data) VALUES (?)"
-            data_to_insert = (args,)  # 挿入するデータ（タプル形式）
-
-            # クエリの実行
-            cursor.execute(insert_query, data_to_insert)
-
-            cursor.commit()
-            st.text("データが正常に挿入されました！")
+                # クエリの実行
+                cursor.execute(insert_query, data_to_insert)
+    
+                cursor.commit()
+                st.text("データが正常に挿入されました！")
 
     # ChatOpenAIモデルを初期化
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.0)
