@@ -389,33 +389,6 @@ def main():
     if st.button("実行"):
         with open("./fuga/output.txt", "w") as f:
             f.write(args)
-
-        # from azure.storage.blob import BlobServiceClient
-        # import os
-        
-        # # 接続文字列を環境変数から取得
-        # connection_string = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
-        
-        # # BlobServiceClientを作成
-        # blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-        
-        # # アップロードするファイルとコンテナの設定
-        # container_name = "containeraiagents"
-        # blob_name = "output.txt"
-        # local_file_path = "output.txt"
-        
-        # def upload_file_to_blob():
-        #     # コンテナクライアントを取得
-        #     container_client = blob_service_client.get_container_client(container_name)
-    
-        #     # ファイルのアップロード
-        #     with open(local_file_path, "rb") as data:
-        #         container_client.upload_blob(name=blob_name, data=data, overwrite=True)
-    
-        #     print(f"File {blob_name} uploaded to container {container_name}.")
-        # # 実行
-        # upload_file_to_blob()
-
         
         with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
             with conn.cursor() as cursor:       
