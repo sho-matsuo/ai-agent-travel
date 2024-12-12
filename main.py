@@ -387,7 +387,7 @@ def main():
     args = st.text_input("作成したいアプリケーションについて記載してください")
 
     if st.button("実行"):
-        with open("/fuga/fuga/output.txt", "w") as f:
+        with open("/fuga/output.txt", "w") as f:
             f.write(args)
         
         with pyodbc.connect('DRIVER='+driver+';SERVER=tcp:'+db_server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+password) as conn:
